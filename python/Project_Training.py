@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS skills (
 )
 """)
 
+
+# Ahmed Mohamed 
+
 def commit_and_close():
     """Commit changes and close the database connection"""
     db.commit()
