@@ -1,39 +1,33 @@
 import sqlite3
 
 try:
-    # الاتصال بقاعدة البيانات
-    DB = sqlite3.connect('database.db')
-    cr = DB.cursor()
+    # Connect to the SQLite database (it will create the database if it doesn't exist)
+    with sqlite3.connect('database.db') as connection:
+        cursor = connection.cursor()
 
-    # إنشاء الجداول إذا لم تكن موجودة
-    cr.execute("CREATE TABLE IF NOT EXISTS users (user_id integer, name text)") 
-    cr.execute("CREATE TABLE IF NOT EXISTS skills (name text, progress integer, user_id integer)")
+        # Create tables if they do not exist
+        cursor.execute("CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY, name TEXT)") 
+        cursor.execute("CREATE TABLE IF NOT EXISTS skills (name TEXT, progress INTEGER, user_id INTEGER)")
 
-    # إدخال بيانات في جدول users
-    #cr.execute("INSERT INTO users (user_id, name) VALUES (1, 'Ahmed')")
-    #cr.execute("INSERT INTO users (user_id, name) VALUES (2, 'Mohamed')")
-    #cr.execute("INSERT INTO users (user_id, name) VALUES (3, 'Yousra')")
-    My_Liste = ["Ahmde","Moahmed","Syed","Yousra","ibrahem","fatma"]
-    for key,users in enumerate(My_Liste):
-        cr.execute(f"INSERT INTO users (user_id, name) VALUES ({key+1}, '{users}')")
+        # Insert data into the users table
+        user_names = ["Ahmed", "Mohamed", "Syed", "Yousra", "Ibrahem", "Fatma"]
+        for index, name in enumerate(user_names):
+            cursor.execute("INSERT INTO users (user_id, name) VALUES (?, ?)", (index + 1, name))
 
-    # حفظ التغييرات
-    DB.commit()
+        # Commit the changes to the database
+        connection.commit()
 
-    #تحديث البيانات 
-    cr.execute("UPDATE users SET name = 'Elzero' WHERE user_id = 1")
+        # Update a specific user's name in the users table
+        cursor.execute("UPDATE users SET name = 'Elzero' WHERE user_id = 1")
 
-    #مسح البيانات
-    cr.execute("DELETE FROM users WHERE user_id = 1")
+        # Delete a user from the users table
+        cursor.execute("DELETE FROM users WHERE user_id = 1")
 
-    # اختبار البيانات
-    cr.execute("SELECT * FROM users")
-    #fetchone >>> بتحدد صف واحد فقط من الداتا  :: fetchmany بتحدد عدد الصفوف المحتاج تحددها 
-    print(cr.fetchall())
+        # Retrieve and display all users
+        cursor.execute("SELECT * FROM users")
+        users = cursor.fetchall()
+        print(users)
 
-except sqlite3.Error as e:
-    print("ُError again:", e)
+except sqlite3.Error as error:
+    print("An error occurred:", error)
 
-finally:
-    # إغلاق الاتصال بقاعدة البيانات
-    DB.close()
