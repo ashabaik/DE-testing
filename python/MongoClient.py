@@ -4,7 +4,6 @@ from pymongo.server_api import ServerApi
 from flatten_json import flatten  # Import flatten_json package
 from bson import ObjectId  # Import ObjectId for conversion
 import pandas as pd
-# MongoDB connection URI
 
 # MongoDB connection URI
 uri = "mongodb+srv://shabaik1996:Shekaa%401996@cluster0.chkql.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
