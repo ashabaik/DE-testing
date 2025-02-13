@@ -19,7 +19,7 @@ SQL_SERVER = "DESKTOP-MGMG36V"
 DATABASE = "Sales_DE"
 
 # Slack Webhook URL for notifications
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
+SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"
 
 def send_slack_notification(message):
     """Send a notification to Slack to track process execution."""
@@ -169,4 +169,3 @@ if cleaned_file:
     upload_to_s3(cleaned_file, S3_BUCKET_NAME, "processed_data/Sales_Cleaned.csv")
     create_tables()
     insert_data_into_sql(cleaned_df)
-
